@@ -1,0 +1,12 @@
+# The Bronze Choir's CPU figure: its worst audio block in cycles. The build writes it as the manifest's cpu line,
+# the budget the Opus core holds the engine to (switched off past 125 % of it in 8 of 64 blocks, outside developer
+# mode).
+#
+# NOT YET MEASURED ON AN OP-1. This is an estimate from the Blackfin instruction-set simulator (sim/run_bench.sh,
+# bfin-elf-run): its worst block was 98,660 cycles (six cathedral voices re-struck, every knob at its heaviest,
+# sympathy at 99). The simulator does not model memory stalls; the Opus docs put an SDRAM line an audio block
+# touches at about 107 cycles, and this engine touches about 150 lines a block at most (16 k cycles). With a further
+# margin the figure is 140,000 (24 % of the 580,525-cycle block). Replace it with the device's "audio: worst N"
+# (developer mode, the mods list, orange push on its row) after playing six-voice chords at the heaviest settings.
+cycles 140000
+estimated 2026-11-02 bfin-elf-run simulator, not a device

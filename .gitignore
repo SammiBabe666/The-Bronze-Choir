@@ -1,0 +1,8 @@
+dist/*.build/
+host/bc_host
+host/stress
+host/*.o
+media/demo/build/
+sim/*.elf
+__pycache__/
+*.pyc

@@ -1,0 +1,17 @@
+# noladrift.bronzechoir: The Bronze Choir, four bronze church bells by inharmonic additive / modal synthesis.
+# Designed exclusively for Opus by Nola Drift. T1: the four bells swinging, blue size, green strike, white metal,
+# orange decay; shift + green sympathy, shift + orange detune; orange push the next preset, blue push the previous.
+# T2: the struck bell's modes. The engine shapes its own envelope (the OS's T2 envelope is not used).
+opmod     1
+id        noladrift.bronzechoir
+name      The Bronze Choir
+author    nola drift
+version   1.0.0
+core      2.8
+adds      engine bronzechoir
+uses      blue_turn shift synth t1 "nothing under shift"
+uses      green_turn shift synth t1 "sympathy"
+uses      white_turn shift synth t1 "nothing under shift"
+uses      orange_turn shift synth t1 "detune"
+uses      blue_push synth t1 modal "previous preset"
+uses      orange_push synth t1 modal "next preset"

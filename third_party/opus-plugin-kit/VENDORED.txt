@@ -1,0 +1,1 @@
+Vendored from https://github.com/LizardMan245/opus (plugin-kit/) at commit d7f28b07cf455bb3986acd96a870cfd067c99d19 (2026-10-31), GPL-3.0. Unmodified; tools/re (reverse-engineering helpers) and examples/ left out.

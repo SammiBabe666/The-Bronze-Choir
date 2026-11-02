@@ -1,0 +1,357 @@
+# The Bronze Choir: the demo and tour score (written by media/demo/make_score.py)
+0.000 push orange
+0.000 title THE BRONZE CHOIR|Designed exclusively for Opus by Nola Drift
+1.000 on 36
+3.600 on 31
+4.000 off 36
+5.600 off 31
+7.000 card 
+7.000 caption An original instrument engine for Opus on the original OP-1|four bronze church bells, synthesized in real time: no samples, no recordings
+12.500 caption Inharmonic additive / modal synthesis in fixed point|running on the OP-1's own Blackfin processor
+16.500 caption Four bells, four registers|below C3, C3 to B3, C4 to B4, C5 and up
+20.500 knob 0 50
+20.500 knob 1 60
+20.500 knob 2 55
+20.500 knob 3 55
+20.500 knob 5 20
+20.500 knob 7 25
+21.000 caption Bell one: the cathedral bell|notes below C3
+21.300 on 36
+22.300 off 36
+23.000 on 43
+23.600 off 43
+25.000 caption Bell two: the church bell|C3 to B3
+25.300 on 50
+26.300 off 50
+27.000 on 55
+27.600 off 55
+29.000 caption Bell three: the ceremonial bell|C4 to B4
+29.300 on 62
+30.300 off 62
+30.800 on 67
+31.400 off 67
+33.000 caption Bell four: the small chime|C5 and up
+33.300 on 79
+33.900 off 79
+34.200 on 84
+34.800 off 84
+35.000 on 88
+35.600 off 88
+36.500 caption Only the struck register's bell swings|a chord across octaves swings each of its bells
+36.800 on 36
+36.800 on 55
+37.800 off 36
+37.800 off 55
+38.800 on 36
+38.800 on 50
+38.800 on 64
+38.800 on 79
+40.000 off 36
+40.000 off 50
+40.000 off 64
+40.000 off 79
+41.000 caption BLUE  bell size|the body: hum weight, partial tuning, ring length (the pitch stays in tune)
+41.000 ramp 0 5 95 5.5
+41.300 on 50
+41.700 off 50
+42.450 on 50
+42.850 off 50
+43.600 on 50
+44.000 off 50
+44.750 on 50
+45.150 off 50
+45.900 on 50
+46.300 off 50
+47.000 caption GREEN  strike|a soft ceremonial touch to a hard bright clapper
+47.000 knob 0 50
+47.000 ramp 1 3 99 5.5
+47.300 on 62
+47.600 off 62
+48.250 on 62
+48.550 off 62
+49.200 on 62
+49.500 off 62
+50.150 on 62
+50.450 off 62
+51.100 on 62
+51.400 off 62
+52.050 on 62
+52.350 off 62
+53.000 caption WHITE  metal|warm dark bronze to bright, complex metal
+53.000 knob 1 60
+53.000 ramp 2 0 99 5.5
+53.300 on 55
+53.700 off 55
+54.450 on 55
+54.850 off 55
+55.600 on 55
+56.000 off 55
+56.750 on 55
+57.150 off 55
+57.900 on 55
+58.300 off 55
+59.000 caption ORANGE  decay|a tight chime to an enormous cathedral ring
+59.000 knob 2 55
+59.000 knob 3 5
+59.300 on 60
+59.600 off 60
+60.300 on 64
+60.600 off 64
+61.000 ramp 3 5 95 2.0
+63.200 on 48
+63.600 off 48
+65.000 caption SHIFT + GREEN  sympathetic resonance|the other bells answer, never feeding back
+65.000 shift 1
+65.200 turn 1 3
+65.400 turn 1 3
+65.400 on 36
+65.400 on 48
+65.400 on 60
+65.600 turn 1 3
+65.800 turn 1 3
+65.900 off 36
+65.900 off 48
+65.900 off 60
+66.000 turn 1 3
+66.200 turn 1 3
+66.400 turn 1 3
+66.600 turn 1 3
+66.800 turn 1 3
+67.000 turn 1 3
+67.200 turn 1 3
+67.400 turn 1 3
+67.600 turn 1 3
+67.800 turn 1 3
+68.000 turn 1 3
+68.200 turn 1 3
+68.400 on 36
+68.400 on 48
+68.400 on 60
+68.900 off 36
+68.900 off 48
+68.900 off 60
+72.000 caption SHIFT + ORANGE  detuning|split modes beat: metallic movement
+72.200 turn 3 3
+72.400 turn 3 3
+72.400 on 45
+72.400 on 57
+72.600 turn 3 3
+72.800 turn 3 3
+73.000 turn 3 3
+73.200 turn 3 3
+73.400 turn 3 3
+73.600 turn 3 3
+73.800 turn 3 3
+74.000 turn 3 3
+74.200 turn 3 3
+74.400 turn 3 3
+74.400 off 45
+74.400 off 57
+74.600 turn 3 3
+74.800 turn 3 3
+75.000 turn 3 3
+75.200 turn 3 3
+75.600 on 69
+76.600 off 69
+78.500 shift 0
+78.600 alloff
+79.000 push blue
+79.000 caption Preset 01  Funeral Procession|a solemn, enormous cathedral bell
+79.020 push orange
+79.300 on 36
+81.300 off 36
+81.600 on 31
+83.600 off 31
+85.000 push orange
+85.000 caption Preset 02  Bronze Garden|a delicate garden of small ceremonial bells
+85.200 on 72
+85.450 off 72
+85.620 on 76
+85.870 off 76
+86.040 on 79
+86.290 off 79
+86.460 on 84
+86.710 off 84
+86.880 on 79
+87.130 off 79
+87.300 on 76
+87.550 off 76
+87.720 on 72
+87.970 off 72
+88.140 on 74
+88.390 off 74
+88.560 on 79
+88.810 off 79
+91.000 push orange
+91.000 caption Preset 03  The Ninth Bell|a massive bell with a complex metallic voice
+91.300 on 40
+91.300 on 52
+92.800 off 40
+92.800 off 52
+93.800 on 47
+94.800 off 47
+97.000 push orange
+97.000 caption Preset 04  Little Saint|a tiny intimate handbell
+97.200 on 84
+97.350 off 84
+97.500 on 88
+97.650 off 88
+97.800 on 91
+97.950 off 91
+98.100 on 96
+98.250 off 96
+98.400 on 91
+98.550 off 91
+98.700 on 88
+98.850 off 88
+99.000 on 84
+99.150 off 84
+99.300 on 86
+99.450 off 86
+99.600 on 91
+99.750 off 91
+99.900 on 84
+100.050 off 84
+103.000 push orange
+103.000 caption Preset 05  Cathedral Rain|overlapping, shimmering bells
+103.200 on 60
+103.500 off 60
+103.650 on 64
+103.950 off 64
+104.100 on 67
+104.400 off 67
+104.550 on 72
+104.850 off 72
+105.000 on 55
+105.300 off 55
+105.450 on 48
+105.750 off 48
+105.900 on 64
+106.200 off 64
+106.350 on 79
+106.650 off 79
+109.000 push orange
+109.000 caption Preset 06  Distant Warning|a huge bell far across an empty landscape
+109.300 on 33
+110.800 off 33
+112.000 on 40
+113.500 off 40
+115.000 push orange
+115.000 caption Preset 07  The Brass Procession|a bright ceremonial ensemble
+115.200 on 55
+115.400 off 55
+115.530 on 62
+115.730 off 62
+115.860 on 67
+116.060 off 67
+116.190 on 62
+116.390 off 62
+116.520 on 55
+116.720 off 55
+116.850 on 62
+117.050 off 62
+117.180 on 67
+117.380 off 67
+117.510 on 74
+117.710 off 74
+117.840 on 67
+118.040 off 67
+118.170 on 62
+118.370 off 62
+118.500 on 55
+118.700 off 55
+118.830 on 60
+119.030 off 60
+121.000 push orange
+121.000 caption Preset 08  Hollow Vespers|a haunting, unstable ensemble
+121.300 on 46
+122.300 off 46
+122.600 on 58
+123.600 off 58
+123.900 on 65
+124.900 off 65
+125.200 on 77
+126.000 off 77
+127.000 alloff
+127.000 push orange
+127.000 push orange
+127.000 push orange
+127.000 page 1
+127.000 caption T2: the struck bell's modes, live|8 to 13 sine modes at inharmonic bell ratios: hum, prime, tierce, quint, nominal...
+127.400 on 36
+128.400 off 36
+131.500 caption Each mode decays exponentially at its own rate|higher modes die sooner; the hum rings longest
+131.800 on 62
+132.800 off 62
+135.500 caption Doublets: split modes a few cents apart beat like real bronze|(orange lines)
+135.800 on 79
+136.600 off 79
+139.000 caption Each bell its own modal structure and personality|cathedral, church, ceremonial, chime
+139.300 on 50
+140.300 off 50
+143.000 page 0
+143.000 alloff
+143.000 push orange
+143.000 caption Performance: layered and sustained|six voices, all four bells
+143.020 push orange
+143.400 on 36
+143.400 on 55
+143.400 on 64
+143.400 on 72
+145.000 on 76
+145.300 off 76
+145.600 on 79
+145.900 off 79
+146.200 on 84
+146.400 off 36
+146.400 off 55
+146.400 off 64
+146.400 off 72
+146.500 off 84
+146.800 on 79
+147.100 off 79
+149.000 on 41
+149.000 on 57
+149.000 on 65
+149.000 on 77
+150.600 on 81
+150.900 off 81
+151.200 on 84
+151.500 off 84
+151.800 on 89
+152.000 off 41
+152.000 off 57
+152.000 off 65
+152.000 off 77
+152.100 off 89
+154.600 push orange
+154.600 caption Hollow Vespers|
+154.620 push orange
+154.640 push orange
+155.000 on 43
+155.000 on 59
+155.000 on 67
+155.000 on 79
+157.000 on 74
+157.400 off 74
+157.800 on 71
+158.000 off 43
+158.000 off 59
+158.000 off 67
+158.000 off 79
+158.200 off 71
+158.600 on 67
+159.000 off 67
+161.000 on 36
+161.000 on 48
+161.000 on 60
+161.000 on 72
+161.000 on 84
+165.000 off 36
+165.000 off 48
+165.000 off 60
+165.000 off 72
+165.000 off 84
+165.000 alloff
+170.000 title THE BRONZE CHOIR|Designed exclusively for Opus by Nola Drift
+178.000 end
