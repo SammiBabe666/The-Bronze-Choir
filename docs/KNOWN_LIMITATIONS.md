@@ -23,4 +23,4 @@
 
 ## The toolchain
 
-The shipped `.opmod` was built with GCC 13.3.0 and **binutils 2.42**, built from Ubuntu's source packages, because GNU's mirrors could not be reached. The kit specifies binutils 2.38 from GNU, with signatures verified. The Ubuntu sources were not signature-checked. Rebuilding with the kit's own script gives the reference build ([INSTALL.md](INSTALL.md)).
+The shipped `.opmod` was built with GCC 13.3.0 and **binutils 2.42**, built from Ubuntu's source packages, because GNU's mirrors could not be reached. The kit specifies binutils 2.38 from GNU, with signatures verified. The Ubuntu sources were not signature-checked. A rebuild with the shared reference toolchain (GCC 13.3.0, binutils 2.38, built by the kit's own recipe) gives the reference build ([INSTALL.md](INSTALL.md)). Those bytes will differ from the shipped file; its behaviour should not.

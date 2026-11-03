@@ -11,7 +11,7 @@ Four bronze bells, synthesized in real time. There are no samples and no recordi
 |---|---|
 | Version | 1.0.0 (see [CHANGELOG.md](CHANGELOG.md)) |
 | Plugin id | `noladrift.bronzechoir` (engine `bronzechoir`) |
-| Needs | Opus 2 with core 2.8 or later, on an OP-1 with firmware 246 |
+| Needs | Opus 2 with core 2.8 or later, on an OP-1 with firmware 246. Built against the Opus 2 public beta 3.2 plugin kit (core 2.13) |
 | File | [`dist/bronzechoir.opmod`](dist/bronzechoir.opmod) (21,108 bytes) |
 | Licence | GPL-3.0 (it is built with the GPL-3.0 Opus plugin kit) |
 

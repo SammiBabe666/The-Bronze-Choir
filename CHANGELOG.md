@@ -1,5 +1,14 @@
 # Changelog
 
+## Compatibility audit (2026-11-03): Opus 2 public beta 3.2
+
+No change to the plugin. `dist/bronzechoir.opmod` is byte-identical.
+
+- The vendored kit is the beta 3.2 kit (LizardMan245/opus `d7f28b0`, core 2.13), still the upstream head. The engine builds against it unchanged.
+- Every core service the engine calls exists in core 2.13, and none is deprecated.
+- The manifest keeps `core 2.8`. That is the lowest core whose services the engine uses, as the kit's manifest rules require. Raising it would only lock out older cores.
+- Removed the kit's Blackfin compiler build script from the vendored copy. The compiler is shared infrastructure and lives outside the project. INSTALL.md now points at the shared toolchain.
+
 ## 1.0.0 (2026-11-02)
 
 First release.

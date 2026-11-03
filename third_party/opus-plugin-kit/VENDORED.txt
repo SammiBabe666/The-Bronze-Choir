@@ -1,1 +1,7 @@
-Vendored from https://github.com/LizardMan245/opus (plugin-kit/) at commit d7f28b07cf455bb3986acd96a870cfd067c99d19 (2026-10-31), GPL-3.0. Unmodified; tools/re (reverse-engineering helpers) and examples/ left out.
+Vendored from https://github.com/LizardMan245/opus (plugin-kit/) at commit d7f28b07cf455bb3986acd96a870cfd067c99d19 (2026-10-31), GPL-3.0.
+That commit is the plugin kit for Opus 2 public beta 3.2 (core 2.13); it is still the upstream head as of 2026-11-03.
+Unmodified, except that these are left out:
+  tools/re/          reverse-engineering helpers (not needed by this plugin)
+  examples/          the kit's example plugins
+  tools/toolchain/   the Blackfin compiler build script: the compiler is shared infrastructure, built once and kept
+                     outside every project (docs/INSTALL.md), never inside a project repository

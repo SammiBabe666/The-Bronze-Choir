@@ -2,7 +2,7 @@
 
 ## What you need
 
-- An **original OP-1** running firmware 246, with **Opus 2** installed (core 2.8 or later: the engine uses `opus_page_still`, which was added in 2.8).
+- An **original OP-1** running firmware 246, with **Opus 2** installed: public beta 3.2 (core 2.13) is current, and any core from 2.8 loads it. The engine uses `opus_page_still`, which was added in 2.8, and nothing newer.
 - The plugin file, [`dist/bronzechoir.opmod`](../dist/bronzechoir.opmod).
 
 ## Install
@@ -21,15 +21,16 @@ Delete `bronzechoir.opmod` from the mods folder in disk mode. If the OP-1 ever f
 
 ## Build from source
 
-You need Python 3.8 or later and the Blackfin cross-compiler (`bfin-elf-gcc` 13.3.0 with binutils), which is the compiler Opus itself is built with. The vendored kit has a script that builds the compiler from GNU's signed sources:
+You need Python 3.8 or later and the Blackfin cross-compiler: `bfin-elf-gcc` 13.3.0 with binutils 2.38, the compiler Opus itself is built with. This repository does **not** contain or build the compiler. Use your existing shared Blackfin toolchain, built once with the Opus plugin kit's own recipe (`plugin-kit/tools/toolchain/build-bfin-toolchain.sh` in [LizardMan245/opus](https://github.com/LizardMan245/opus/tree/main/plugin-kit)). Point the kit at it:
 
 ```
-sudo bash third_party/opus-plugin-kit/tools/toolchain/build-bfin-toolchain.sh deps
-WORK=$HOME/bfin-build bash third_party/opus-plugin-kit/tools/toolchain/build-bfin-toolchain.sh fetch verify extract linux
-export PATH=$HOME/bfin-build/linux-install/bin:$PATH
+export OP1_BFIN_TOOLCHAIN=/path/to/your/bfin-toolchain      # the folder that holds bin/bfin-elf-gcc
+export PATH=$OP1_BFIN_TOOLCHAIN/bin:$PATH                  # for sim/run_bench.sh (bfin-elf-gcc, bfin-elf-run)
 ```
 
-Note: the vendored kit leaves out `tools/re/` (the firmware reverse-engineering notes, which this plugin does not need). The toolchain script is included.
+If your shared toolchain has an `env.sh` that sets these, source that instead.
+
+The vendored kit leaves out `tools/re/`, `examples/` and `tools/toolchain/` ([VENDORED.txt](../third_party/opus-plugin-kit/VENDORED.txt)).
 
 Then build:
 
@@ -40,7 +41,7 @@ python3 third_party/opus-plugin-kit/plugin_tool.py show dist/bronzechoir.opmod
 
 The build treats every warning as an error and refuses anything the headers do not declare.
 
-**How the shipped file was built.** GNU's FTP mirrors could not be reached from the build machine, so the compiler that built `dist/bronzechoir.opmod` was built from Ubuntu's `gcc-13-source` (GCC 13.3.0) and `binutils-source` (2.42, rather than the kit's 2.38) packages. Their GNU signatures were **not** checked. If that matters to you, rebuild the plugin with the kit's own verified toolchain as shown above. The result should behave the same, though the bytes may differ.
+**How the shipped file was built.** GNU's FTP mirrors could not be reached from the build machine, so the compiler that built `dist/bronzechoir.opmod` was built from Ubuntu's `gcc-13-source` (GCC 13.3.0) and `binutils-source` (2.42, rather than the kit's 2.38) packages. Their GNU signatures were **not** checked. If that matters to you, rebuild the plugin with a toolchain built by the kit's own verified recipe (GCC 13.3.0, binutils 2.38). The result should behave the same, though the bytes may differ.
 
 ## Regenerating the bells' tables
 
