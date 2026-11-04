@@ -9,10 +9,10 @@ Four bronze bells, synthesized in real time. There are no samples and no recordi
 
 | | |
 |---|---|
-| Version | 1.0.0 (see [CHANGELOG.md](CHANGELOG.md)) |
+| Version | 1.0.1 (see [CHANGELOG.md](CHANGELOG.md)) |
 | Plugin id | `noladrift.bronzechoir` (engine `bronzechoir`) |
 | Needs | Opus 2 with core 2.8 or later, on an OP-1 with firmware 246. Built against the Opus 2 public beta 3.2 plugin kit (core 2.13) |
-| File | [`dist/bronzechoir.opmod`](dist/bronzechoir.opmod) (21,108 bytes) |
+| File | [`dist/bronzechoir.opmod`](dist/bronzechoir.opmod) (21,284 bytes) |
 | Licence | GPL-3.0 (it is built with the GPL-3.0 Opus plugin kit) |
 
 > **Status, honestly:** this engine has **not yet been run on an OP-1 or inside a real Opus core**. I had no device, and the Opus emulator has not been released yet. It builds clean with the Blackfin toolchain into a valid `.opmod`. The real engine sources passed all ten stress tests on a computer, and its CPU cost was measured in the Blackfin instruction simulator. All of that is described in [docs/TESTING.md](docs/TESTING.md). The `cpu.txt` figure is a simulator estimate and should be replaced with a device measurement. See [docs/KNOWN_LIMITATIONS.md](docs/KNOWN_LIMITATIONS.md).

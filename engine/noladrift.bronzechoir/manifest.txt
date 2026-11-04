@@ -2,16 +2,18 @@
 # Designed exclusively for Opus by Nola Drift. T1: the four bells swinging, blue size, green strike, white metal,
 # orange decay; shift + green sympathy, shift + orange detune; orange push the next preset, blue push the previous.
 # T2: the struck bell's modes. The engine shapes its own envelope (the OS's T2 envelope is not used).
+# Every control is modal (only while this engine's page shows), so it never clashes with another engine's, such as
+# Outatime's shift turns (1.0.1).
 opmod     1
 id        noladrift.bronzechoir
 name      The Bronze Choir
 author    nola drift
-version   1.0.0
+version   1.0.1
 core      2.8
 adds      engine bronzechoir
-uses      blue_turn shift synth t1 "nothing under shift"
-uses      green_turn shift synth t1 "sympathy"
-uses      white_turn shift synth t1 "nothing under shift"
-uses      orange_turn shift synth t1 "detune"
+uses      blue_turn shift synth t1 modal "nothing under shift"
+uses      green_turn shift synth t1 modal "sympathy"
+uses      white_turn shift synth t1 modal "nothing under shift"
+uses      orange_turn shift synth t1 modal "detune"
 uses      blue_push synth t1 modal "previous preset"
 uses      orange_push synth t1 modal "next preset"

@@ -13,7 +13,7 @@ All six parameters are live. They act on ringing bells as well as on the next st
 | **Blue** push | previous preset | | | |
 | **Orange** push | next preset | | | |
 
-The shift layer turns 2% per detent. The plain turns use the OS's own knob handling. White and blue do nothing under shift; the manifest says so, so other plugins can see it.
+The shift layer turns 2% per detent. The plain turns use the OS's own knob handling. White and blue do nothing under shift. All of the engine's controls are declared `modal` in the manifest: they are taken only while The Bronze Choir's own page shows, so they never clash with another plugin's controls, such as Outatime's shift turns.
 
 **Knob storage.** Size, strike, metal and decay are the sound's knobs 0 to 3. Sympathy and detune are knobs 5 and 7 (knob 4 is the core's). The current preset number is kept in the sound's engine data. All of it is saved with the sound, so the OS's own hold-to-save keeps any edit as a user preset.
 
