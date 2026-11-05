@@ -12,7 +12,7 @@
  *
  * T2: the newest note's modes, live: one line a mode at its frequency ratio (log scale), as tall as it rings. */
 #include "bc_page.h"
-#include "op1fw.h"
+#include "bc_fw.h"
 #include "bc_presets.h"
 
 static struct opl_self *me;
@@ -216,7 +216,7 @@ void bc_page_t1(void)
 {
     short k[8];
     opus_engine_knobs(k);
-    const int shift = fw_shift_held() ? 1 : 0;
+    const int shift = bc_shift_held();
     bc_swing_step(k);
     const int p = bc_preset_now();
     if (!opus_page_still(me, (unsigned)(shift + 2))) {
@@ -225,10 +225,7 @@ void bc_page_t1(void)
     }
     /* the preset: its name, marked when its knobs were turned since */
     static char name[32];
-    if (p)
-        fw_snprintf(name, sizeof name, "0%i %s%s", p, BC_PRESET[p - 1].name, bc_preset_intact(k) ? "" : " *");
-    else
-        fw_snprintf(name, sizeof name, "the bronze choir");
+    bc_preset_title(name, sizeof name, p, p ? BC_PRESET[p - 1].name : "", p && !bc_preset_intact(k));
     opus_page_text(me, 0, 10, 3, 8, OPUS_COLOR_TEXT, name);
     /* the bells: the size knob makes all four a little larger or smaller (0.92 .. 1.08) */
     const int sz = k[BC_SIZE] < 0 ? 0 : k[BC_SIZE];

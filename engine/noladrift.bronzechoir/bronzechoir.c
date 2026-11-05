@@ -10,7 +10,7 @@
  *   T2: the struck bell's modes, live (the engine shapes its own envelope: the OS's T2 envelope is not used)
  */
 #include "opus_plugin.h"
-#include "op1fw.h"
+#include "bc_fw.h"
 #include "bc_dsp.h"
 #include "bc_page.h"
 #include "bc_presets.h"
@@ -111,7 +111,7 @@ static void preset_apply(int p)            /* p 1-8; key thread */
 
 static int e_turn(int encoder, int detents, int page)
 {
-    if (page != 0 || !fw_shift_held())
+    if (page != 0 || !bc_shift_held())
         return 0;                          /* plain turns: the OS's (knobs 0-3) */
     if (detents && (encoder == 1 || encoder == 3)) {
         const int k = encoder == 1 ? BC_SYMPATHY : BC_DETUNE;

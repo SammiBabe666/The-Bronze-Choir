@@ -2,7 +2,7 @@
 ENGINE = ../engine/noladrift.bronzechoir
 SDK    = ../third_party/opus-plugin-kit/sdk
 CFLAGS = -O2 -Wall -Wextra -Werror -I$(ENGINE) -I$(SDK) -I.
-SRC    = $(ENGINE)/bronzechoir.c $(ENGINE)/bc_dsp.c $(ENGINE)/bc_page.c os_sim.c
+SRC    = $(ENGINE)/bronzechoir.c $(ENGINE)/bc_dsp.c $(ENGINE)/bc_page.c $(ENGINE)/bc_fw.c os_sim.c
 
 all: bc_host stress
 

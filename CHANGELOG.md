@@ -1,8 +1,9 @@
 # Changelog
 
-## 1.0.1 (2026-11-04, not yet released)
+## 1.0.1 (2026-11-05)
 
 - Fixed a control clash with Outatime. On a device the mods list said "shift blue turn is taken by the bronze choir", so whichever of the two engines loaded second was refused. The shift turns on T1 are now declared `modal`: they are taken only while this engine's own page shows, which is also the only time the engine's turn handler runs. Modal controls never clash, so both engines can be installed together. No sound, page or parameter changed.
+- The engine's two firmware calls (`fw_shift_held`, `fw_snprintf`) moved into one small file, `bc_fw.c`. It is now the only file that includes `op1fw.h`; the page and the glue call `bc_shift_held` and `bc_preset_title` instead.
 
 ## Compatibility audit (2026-11-03): Opus 2 public beta 3.2
 

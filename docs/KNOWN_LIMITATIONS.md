@@ -5,7 +5,7 @@
 - **Never run on an OP-1, in a real Opus core, or in the Opus emulator.** The emulator has not been released yet. Everything in [TESTING.md](TESTING.md) ran on a computer: the real engine sources against an OS stand-in, and the Blackfin instruction simulator. The first device run should be done with developer mode on.
 - **`cpu.txt` (140,000 cycles) is a simulator estimate.** The simulator does not model memory stalls. If the real worst block is more than 175,000 (140,000 plus 25%), Opus would switch the plugin off outside developer mode until `cpu.txt` is corrected. Even then the engine would use under a third of the block.
 - **Encoder pushes on T1** (blue and orange for the presets) are declared in the manifest as `synth t1 modal` and handled in the engine's key handler. How they interact with the OS's own push behaviour has not been seen on a device.
-- **`fw_shift_held`** is a firmware call, the same one the kit's outatime example uses for its shift layer. It is not a core service.
+- **Two firmware calls.** The engine calls `fw_shift_held` (the same call the kit's outatime example uses for its shift layer) and `fw_snprintf`. They are firmware #246 functions, not core services. Both live in one small file, `engine/noladrift.bronzechoir/bc_fw.c`, the only file that includes `op1fw.h`, so a firmware or core change touches that file alone.
 
 ## The approximations in the computer renders
 

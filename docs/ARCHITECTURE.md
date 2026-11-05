@@ -1,6 +1,6 @@
 # Architecture
 
-The Bronze Choir is one Opus 2 synth engine, `bronzechoir`, inside the plugin `noladrift.bronzechoir`. It is plain C in fixed point. It uses no floating point, allocates nothing, and uses no C library. There are three source files plus generated tables:
+The Bronze Choir is one Opus 2 synth engine, `bronzechoir`, inside the plugin `noladrift.bronzechoir`. It is plain C in fixed point. It uses no floating point, allocates nothing, and uses no C library. These are the source files and generated tables:
 
 | File | What it is | Runs where |
 |---|---|---|
@@ -9,6 +9,7 @@ The Bronze Choir is one Opus 2 synth engine, `bronzechoir`, inside the plugin `n
 | `bc_page.c`, `bc_page.h` | T1 (the bells) and T2 (the modes) | the screen task only |
 | `bronzechoir.c` | glue: the `opus_engine` struct, the shift layer, presets, encoder pushes | OS callbacks |
 | `bc_presets.h` | the eight presets | data |
+| `bc_fw.c`, `bc_fw.h` | the engine's only two firmware calls (`fw_shift_held`, `fw_snprintf`), the only file that includes `op1fw.h` | the screen task and OS callbacks |
 
 ## Signal flow
 
