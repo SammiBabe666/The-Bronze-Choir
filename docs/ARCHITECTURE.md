@@ -15,7 +15,7 @@ The Bronze Choir is one Opus 2 synth engine, `bronzechoir`, inside the plugin `n
 
 ```
 note on ──► voice (one of the OS's 6)
-              │  the struck pitch picks the bell: <C3 cathedral, C3–B3 church, C4–B4 ceremonial, ≥C5 chime
+              │  the struck pitch picks the bell: key <B2 cathedral, B2–E3 church, F3–A#3 ceremonial, ≥B3 chime (an octave up)
               ▼
      strike: each mode's starting level = table level + strike tilt + metal tilt + size + loudness match
               │  + impact noise burst (coloured by strike, shorter for bigger bells)

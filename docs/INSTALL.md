@@ -42,7 +42,7 @@ python3 $OPUS_KIT/plugin_tool.py show dist/bronzechoir.opmod
 
 The build treats every warning as an error and refuses anything the headers do not declare.
 
-**How the shipped file was built.** 1.1.0's `dist/bronzechoir.opmod` was built with the shared reference toolchain (GCC 13.3.0, binutils 2.38, GNU sources with verified signatures, the kit's own recipe) and the beta 4 RC1 kit. The build is reproducible: SHA-256 `fde97327…c58b6` (22,372 bytes). 1.0.x's file was built with binutils 2.42 from Ubuntu's source packages.
+**How the shipped file was built.** 1.1.0's `dist/bronzechoir.opmod` was built with the shared reference toolchain (GCC 13.3.0, binutils 2.38, GNU sources with verified signatures, the kit's own recipe) and the beta 4 RC1 kit. The build is reproducible: SHA-256 `fe443418…d13b90a` (22,388 bytes). 1.0.x's file was built with binutils 2.42 from Ubuntu's source packages.
 
 ## Regenerating the bells' tables
 

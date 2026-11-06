@@ -12,21 +12,21 @@ Four bronze bells, synthesized in real time. There are no samples and no recordi
 | Version | 1.1.0, native for Opus 2 beta 4 (see [CHANGELOG.md](CHANGELOG.md)) |
 | Plugin id | `noladrift.bronzechoir` (engine `bronzechoir`) |
 | Needs | Opus 2 beta 4 (core 2.21 or later), on an OP-1 with firmware 246. Built with the beta 4 RC1 plugin kit (core 2.30). For beta 3.x use 1.0.1 (commit `fb2e822`) |
-| File | [`dist/bronzechoir.opmod`](dist/bronzechoir.opmod) (22,372 bytes) |
+| File | [`dist/bronzechoir.opmod`](dist/bronzechoir.opmod) (22,388 bytes) |
 | Licence | GPL-3.0 (it is built with the GPL-3.0 Opus plugin kit) |
 
 > **Status, honestly:** this engine has **not yet been run on an OP-1 or inside a real Opus core**, on beta 3.2 or beta 4. I had no device, and the Opus emulator has not been released yet. It builds clean with the Blackfin toolchain into a valid `.opmod`. The real engine sources passed all ten stress tests on a computer, and its CPU cost was measured in the Blackfin instruction simulator. All of that is described in [docs/TESTING.md](docs/TESTING.md). The `cpu.txt` figure is a simulator estimate and should be replaced with a device measurement. See [docs/KNOWN_LIMITATIONS.md](docs/KNOWN_LIMITATIONS.md).
 
 ## The four bells
 
-The incoming note picks the bell: each register strikes its own bell.
+The incoming note picks the bell: each register strikes its own bell. At the OP-1's normal octave (F2 to E4) the keyboard holds all four, six keys each, and every bell sounds an octave above the key.
 
 | Bell | Register | Character | Modes |
 |---|---|---|---|
-| 1. The cathedral bell | below C3 | enormous, solemn, long hum | 13 |
-| 2. The church bell | C3 to B3 | sharper tierce, brighter upper partials | 11 |
-| 3. The ceremonial bell | C4 to B4 | strong fundamental and twelfth, faint hum | 10 |
-| 4. The chime | C5 and up | sparse, glassy, widely spaced partials | 8 |
+| 1. The cathedral bell | keys below B2 | enormous, solemn, long hum | 13 |
+| 2. The church bell | B2 to E3 | sharper tierce, brighter upper partials | 11 |
+| 3. The ceremonial bell | F3 to A#3 | strong fundamental and twelfth, faint hum | 10 |
+| 4. The chime | B3 and up | sparse, glassy, widely spaced partials | 8 |
 
 ## Controls (T1)
 

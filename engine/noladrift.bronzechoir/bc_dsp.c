@@ -1,8 +1,10 @@
 /* The Bronze Choir's sound: four bronze bells by inharmonic additive / modal synthesis. Plain C, fixed point, no
  * floating point, no allocation, no C library. Designed exclusively for Opus by Nola Drift.
  *
- * A voice is one struck bell. Which bell is decided by the incoming note itself (its pitch, at the strike):
- * below C3 the cathedral bell, C3-B3 the church bell, C4-B4 the ceremonial bell, C5 and up the small chime. Each bell
+ * A voice is one struck bell. Which bell is decided by the incoming note itself (its pitch, at the strike), so that
+ * the OP-1's keyboard at its normal octave (F2-E4) holds all four, six keys each: below B2 the cathedral bell, B2-E3
+ * the church bell, F3-A#3 the ceremonial bell, B3 and up the small chime. Every bell sounds an octave above the key
+ * (1.1.0: the key's octave put the cathedral's hum and prime under what the OP-1's speaker plays: a thud). Each bell
  * has its own modal structure (bc_tables.h, from tools/make_tables.py): 8 to 13 sine modes at inharmonic ratios
  * (hum, prime, tierce, quint, nominal and the upper partials for the church bells), each with its own exponentially
  * decaying envelope, and doublets: split modes a few cents apart that beat as a real bell's do.
@@ -32,10 +34,12 @@
 #define VOICE_GAIN_L    (-7115)            /* log2(0.30) in Q12: one voice's sum of mode amplitudes */
 #define NYQ_LIMIT_8     3607772u           /* a step of 0.215 of 2^32 at 88.2 kHz (19 kHz), / 256 */
 #define N               (BC_BLOCK / 2)     /* the modes are summed at 44.1 kHz: 64 samples a block */
-#define STEP_C3         6370031u
 #define STEP_C4         12740061u
-#define STEP_C5         25480117u
 #define LSTEP_C4        96677              /* log2 of STEP_C4, Q12 */
+/* The bells' boundaries as sounding steps (an octave above the keys B2, F3 and B3) */
+#define STEP_B3         12025015u
+#define STEP_F4         17005939u
+#define STEP_B4         24050030u
 
 volatile unsigned bc_strikes[BC_BELLS];
 volatile short bc_strike_amt[BC_BELLS];
@@ -52,7 +56,7 @@ static int units = BC_OSC_BUDGET;          /* the budget a voice may use this bl
 static int renders;                        /* voices rendered since the last sum block */
 /* The sends: each bell's sound in the last block, at 44.1 kHz, for the other bells' sympathetic resonators. */
 static int send[BC_BELLS][BC_SUM_BLOCK];
-static volatile unsigned tune[BC_BELLS] = { STEP_C3 / 2, STEP_C3, STEP_C4, STEP_C5 };   /* each bell's last pitch */
+static volatile unsigned tune[BC_BELLS] = { STEP_B3 / 2, STEP_B3, STEP_F4, STEP_B4 };   /* each bell's last pitch */
 
 static int scratch_sdram[N];
 static int *acc = scratch_sdram;           /* a voice's 128 samples, summed */
@@ -134,7 +138,7 @@ static inline int kn(int v)                /* a knob kept within 0-32767 */
 
 int bc_bell_of(unsigned pitch)
 {
-    return pitch < STEP_C3 ? 0 : pitch < STEP_C4 ? 1 : pitch < STEP_C5 ? 2 : 3;
+    return pitch < STEP_B3 ? 0 : pitch < STEP_F4 ? 1 : pitch < STEP_B4 ? 2 : 3;
 }
 
 /* ---------------------------------------------------------------- the voice */
@@ -304,7 +308,7 @@ unsigned mode_loop(int *dst, unsigned p, unsigned s, int a0, int a1, int first, 
 
 void bc_render(struct bc_voice *v, short *out, const short *par, const unsigned *pitchv)
 {
-    const unsigned pitch = pitchv[0];
+    const unsigned pitch = pitchv[0] < 0x80000000u ? pitchv[0] << 1 : 0xFFFFFFFFu;   /* an octave above the key */
     for (int k = 0; k < 8; ++k)
         bc_heard[k] = par[k];
     if (!renders++) {
@@ -350,7 +354,8 @@ void bc_render(struct bc_voice *v, short *out, const short *par, const unsigned 
     /* DECAY: log2 of the prime's T60 in Q12 octaves of seconds: -2 (0.25 s) .. +5 (32 s), then the bell's own,
      * the size's, the note's (higher notes shorter) and the release's damping */
     static const short BELL_T[BC_BELLS] = { 3277, 1229, -1229, -3277 };   /* +0.8, +0.3, -0.3, -0.8 octaves */
-    int lt = -8192 + ((dc * 28672) >> 15) + BELL_T[v->bell] + ((szd * 5734) >> 15) - ((lp - LSTEP_C4) >> 1);
+    /* (the note's part measured from C5: each key keeps the decay it had before the bells went up an octave) */
+    int lt = -8192 + ((dc * 28672) >> 15) + BELL_T[v->bell] + ((szd * 5734) >> 15) - ((lp - LSTEP_C4 - OCT) >> 1);
     if (v->released)
         lt -= 1229 + (((32767 - dc) * 12288) >> 15);       /* the hand on the bell: 0.3 .. 3.3 octaves shorter */
     /* the rate: a bell whose highest mode stays under 5.5 kHz is summed at 22.05 kHz (bells one to three across the

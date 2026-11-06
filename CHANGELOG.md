@@ -2,7 +2,9 @@
 
 ## 1.1.0 (2026-11-06): native for Opus 2 beta 4
 
-Built with the Opus 2 beta 4 RC1 plugin kit (core 2.30) and the shared reference toolchain (GCC 13.3.0, binutils 2.38). Needs core 2.21; for beta 3.x keep 1.0.1. The sound, the controls, the pages and the presets are unchanged: on a computer the ten stress tests, the demo score's audio and every page frame are bit-identical to 1.0.1, and the Blackfin simulator's cycle counts are the same in all seven scenarios.
+Built with the Opus 2 beta 4 RC1 plugin kit (core 2.30) and the shared reference toolchain (GCC 13.3.0, binutils 2.38). Needs core 2.21; for beta 3.x keep 1.0.1. The controls, the pages and the presets are unchanged.
+
+- **All four bells on the keyboard, an octave up** (from the first device test). At the OP-1's normal octave (F2 to E4) the old boundaries (C3, C4, C5) left the chime out, and the low keys' hum and prime sat under what the OP-1's speaker plays, so they thudded. The bells now split the keyboard six keys each (below B2 the cathedral, B2 to E3 the church bell, F3 to A#3 the ceremonial bell, B3 and up the chime) and every bell sounds an octave above the key, still in tune. Each key keeps its old decay. On a computer the lowest keys have about twice the level above 300 Hz; the ten stress tests still show no clips, clicks or stuck voices.
 
 - **Fast memory on lease.** The render's scratch and sine table (2,304 bytes) are no longer taken from L1 for good at the start (`opus_fast`); they are on two leases (`opus_fast_lease`, a scratch and a constant table), fast while the engine plays and handed back when it stops, so other plugins get that memory too. No `priority` line: the engine's voices stay where the core made them (it keeps pointers to them for the sympathy, so `OPUS_ENGINE_STATE_MOVES` is not set).
 - **The bells' swing keeps time.** Beta 4 calls a still page only every fourth frame, and a late frame comes two periods on, so a pendulum stepped once a frame would lag and slow down. The page now steps it once per display period of the CPU's cycle counter (`bc_cycles`, in `bc_fw.c`).
