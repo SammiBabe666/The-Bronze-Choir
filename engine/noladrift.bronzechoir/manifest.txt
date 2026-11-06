@@ -4,12 +4,14 @@
 # T2: the struck bell's modes. The engine shapes its own envelope (the OS's T2 envelope is not used).
 # Every control is modal (only while this engine's page shows), so it never clashes with another engine's, such as
 # Outatime's shift turns (1.0.1).
+# 1.1.0, native for Opus 2 beta 4 (core 2.21 on): the render's scratch and sine table on a fast-memory lease, the shift
+# layer named for LFO types (the matrix), the page's swing timed by the cycle counter.
 opmod     1
 id        noladrift.bronzechoir
 name      The Bronze Choir
 author    nola drift
-version   1.0.1
-core      2.8
+version   1.1.0
+core      2.21
 adds      engine bronzechoir
 uses      blue_turn shift synth t1 modal "nothing under shift"
 uses      green_turn shift synth t1 modal "sympathy"

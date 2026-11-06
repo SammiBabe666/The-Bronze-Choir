@@ -53,8 +53,14 @@ static void v_release(void *voice, const short *knobs)
     bc_release((struct bc_voice *)voice);
 }
 
+/* Fast memory on lease (core 2.21): the render's scratch (filled each render before it is read) and the sine table
+ * (set once). Each render takes them where the core put them this block, L1 while the engine plays, else the pool's
+ * copies; without a lease the pool's copies alone. */
+static struct opus_fast_lease *scratch_lease, *sine_lease;
+
 static void v_render(void *voice, short *out, const short *par, const unsigned *pitch)
 {
+    bc_mem((int *)opus_fast_use(scratch_lease), (const short *)opus_fast_use(sine_lease));
     bc_render((struct bc_voice *)voice, out, par, pitch);
 }
 
@@ -166,13 +172,27 @@ static const struct opus_engine BRONZE_CHOIR = {
     .key = e_key,
     .flags = OPUS_ENGINE_OWN_ENVELOPE,
     .finished = v_finished,
+    .shift_knobs = { -1, BC_SYMPATHY, -1, BC_DETUNE },   /* for LFO types such as the matrix (core 2.21) */
 };
+
+static void fast_lease(struct opl_self *self)
+{
+    const unsigned sb = (unsigned)bc_scratch_bytes(), tb = BC_SINE_LEN * sizeof(short);
+    int *const scratch = opus_alloc_audio(self, sb);
+    short *const sine = opus_alloc_audio(self, tb);
+    if (!scratch || !sine)
+        return;                            /* no room: the render keeps its own static buffers */
+    bc_sine_copy(sine);
+    bc_mem(scratch, sine);
+    scratch_lease = opus_fast_lease(self, sb, OPUS_FAST_SCRATCH, scratch);
+    sine_lease = opus_fast_lease(self, tb, OPUS_FAST_CONST, sine);
+}
 
 int opl_init(struct opl_self *self)
 {
     me = self;
     bc_sum_init();
-    bc_fast(opus_fast(self, (unsigned)bc_fast_bytes()));   /* the render's scratch and sine in L1, else SDRAM */
+    fast_lease(self);                      /* the render's scratch and sine in L1 while it plays */
     bc_page_init(self);
     return opus_engine_add(self, &BRONZE_CHOIR) < 0 ? -1 : 0;
 }

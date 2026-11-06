@@ -1,6 +1,8 @@
 # The computer's builds of the engine: the score renderer (bc_host) and the stress tests (stress).
 ENGINE = ../engine/noladrift.bronzechoir
-SDK    = ../third_party/opus-plugin-kit/sdk
+# The Opus 2 beta 4 plugin kit (core 2.30), outside the repository: make OPUS_KIT=/path/to/opus2-plugin-kit
+OPUS_KIT ?= ../../opus2-plugin-kit
+SDK    = $(OPUS_KIT)/sdk
 CFLAGS = -O2 -Wall -Wextra -Werror -I$(ENGINE) -I$(SDK) -I.
 SRC    = $(ENGINE)/bronzechoir.c $(ENGINE)/bc_dsp.c $(ENGINE)/bc_page.c $(ENGINE)/bc_fw.c os_sim.c
 

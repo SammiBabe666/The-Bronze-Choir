@@ -3,6 +3,7 @@
 ## Not verified on hardware
 
 - **Never run on an OP-1, in a real Opus core, or in the Opus emulator.** The emulator has not been released yet. Everything in [TESTING.md](TESTING.md) ran on a computer: the real engine sources against an OS stand-in, and the Blackfin instruction simulator. The first device run should be done with developer mode on.
+- **Beta 4 (1.1.0) is build-checked only.** The fast-memory leases, the page's cycle-counter clock and the matrix on the shift layer have not been seen on a device. With nothing else playing the leases should hold L1; when heavier plugins of higher priority take it, the render reads its sine and scratch from the pool, which the simulator does not model (about 72 lines a block, roughly 8 k cycles at the docs' 107 a line).
 - **`cpu.txt` (140,000 cycles) is a simulator estimate.** The simulator does not model memory stalls. If the real worst block is more than 175,000 (140,000 plus 25%), Opus would switch the plugin off outside developer mode until `cpu.txt` is corrected. Even then the engine would use under a third of the block.
 - **Encoder pushes on T1** (blue and orange for the presets) are declared in the manifest as `synth t1 modal` and handled in the engine's key handler. How they interact with the OS's own push behaviour has not been seen on a device.
 - **Two firmware calls.** The engine calls `fw_shift_held` (the same call the kit's outatime example uses for its shift layer) and `fw_snprintf`. They are firmware #246 functions, not core services. Both live in one small file, `engine/noladrift.bronzechoir/bc_fw.c`, the only file that includes `op1fw.h`, so a firmware or core change touches that file alone.
@@ -23,4 +24,4 @@
 
 ## The toolchain
 
-The shipped `.opmod` was built with GCC 13.3.0 and **binutils 2.42**, built from Ubuntu's source packages, because GNU's mirrors could not be reached. The kit specifies binutils 2.38 from GNU, with signatures verified. The Ubuntu sources were not signature-checked. A rebuild with the shared reference toolchain (GCC 13.3.0, binutils 2.38, built by the kit's own recipe) gives the reference build ([INSTALL.md](INSTALL.md)). Those bytes will differ from the shipped file; its behaviour should not.
+From 1.1.0 the shipped `.opmod` is built with the shared reference toolchain (GCC 13.3.0, binutils 2.38, the kit's own recipe). 1.0.x was built with binutils 2.42 from Ubuntu's unverified source packages.

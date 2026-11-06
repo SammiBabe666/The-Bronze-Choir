@@ -58,7 +58,7 @@ The budget is 580,525 cycles per 64-sample block for everything the OP-1 does. M
 
 - **Reduced summing rate.** Modes are summed at 22.05 kHz when a voice's top mode is below 5.5 kHz, and at 44.1 kHz otherwise. The sum is then linearly interpolated to the 88.2 kHz the OS asks for. A mode at 44.1 kHz costs two budget units and one at 22.05 kHz costs one.
 - **A shared mode budget.** Voices that are sounding share 54 units. One voice alone keeps every mode of its bell. Six voices each keep their most important modes, and never fewer than 4. The budget is worked out once per block, on the block's first render, from the number of live voices.
-- **Inner loop.** 16×16-bit multiplies, a 1024-entry sine table in L1, two samples per loop iteration, and a scratch buffer in L1 (`opus_fast`).
+- **Inner loop.** 16×16-bit multiplies, a 1024-entry sine table in L1, two samples per loop iteration, and a scratch buffer in L1 (two `opus_fast_lease` leases from 1.1.0: fast while the engine plays).
 - **Per-mode caches.** Decay step, metal gain and phase step are recomputed only when the knob, pitch or rate they depend on changes.
 - **Silent modes are skipped** once they fall below −84 dB, as are modes above 19 kHz.
 - **Amplitude hold.** Each voice's sum of mode amplitudes is held at or below 0.85 FS, so a single voice can never clip.
@@ -92,7 +92,7 @@ The soft limiter after them leaves everything below 0.7 FS untouched and eases p
 
 ## Memory
 
-- **L1 (`opus_fast`):** the sine table and the summing scratch buffer, about 2.5 KB.
+- **L1 (`opus_fast_lease`, 1.1.0; `opus_fast` before):** the sine table and the summing scratch buffer, 2,304 bytes, leased while the engine plays.
 - **Voice state:** about 450 bytes per voice × 6.
 - **Code and data:** the `.opmod` is 21 KB. The image is 16.5 KB plus 1.9 KB zero-fill.
 

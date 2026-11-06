@@ -217,7 +217,20 @@ void bc_page_t1(void)
     short k[8];
     opus_engine_knobs(k);
     const int shift = bc_shift_held();
-    bc_swing_step(k);
+    /* The pendulums step once a display period, timed by the cycle counter: on a still screen Opus beta 4 calls the
+     * page only every fourth frame, and a late frame comes two periods on. After a long gap (the page was not
+     * showing) one step. */
+    static unsigned last, rem;
+    static int timed;
+    const unsigned now = bc_cycles();
+    unsigned d = timed ? now - last + rem : BC_FRAME_CYCLES;
+    last = now;
+    timed = 1;
+    if (d > 8 * BC_FRAME_CYCLES)
+        d = BC_FRAME_CYCLES;
+    rem = d % BC_FRAME_CYCLES;
+    for (unsigned n = d / BC_FRAME_CYCLES; n; --n)
+        bc_swing_step(k);
     const int p = bc_preset_now();
     if (!opus_page_still(me, (unsigned)(shift + 2))) {
         still_part(shift);

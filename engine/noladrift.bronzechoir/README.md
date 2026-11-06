@@ -6,7 +6,7 @@ Designed exclusively for Opus by Nola Drift.
 Build from the repository root:
 
 ```
-python3 third_party/opus-plugin-kit/plugin_tool.py build engine/noladrift.bronzechoir --out dist/bronzechoir.opmod
+python3 $OPUS_KIT/plugin_tool.py build engine/noladrift.bronzechoir --out dist/bronzechoir.opmod   # the beta 4 kit
 ```
 
 The repository's README.md and docs/ describe the sound, the controls, the presets, the tests and the limitations.

@@ -74,6 +74,25 @@ void bc_fast(void *mem)
     sine = t;
 }
 
+int bc_scratch_bytes(void)
+{
+    return N * (int)sizeof(int);
+}
+
+void bc_sine_copy(short *t)
+{
+    for (int i = 0; i < BC_SINE_LEN; ++i)
+        t[i] = BC_SINE[i];
+}
+
+void bc_mem(int *scratch, const short *sine_table)
+{
+    if (scratch)
+        acc = scratch;
+    if (sine_table)
+        sine = sine_table;
+}
+
 /* ---------------------------------------------------------------- integer math */
 
 /* 2^(x/4096) in Q15 for x <= 0 (Q12 log2); 0 below -15 octaves. */

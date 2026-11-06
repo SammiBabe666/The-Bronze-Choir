@@ -63,6 +63,24 @@ int opus_engine_data_set(const void *buf, int n)
     return 1;
 }
 void *opus_fast(struct opl_self *s, unsigned bytes) { (void)s; return calloc(1, bytes); }
+void *opus_alloc_audio(struct opl_self *s, unsigned bytes) { (void)s; return calloc(1, bytes); }
+/* The lease stand-in: the fast copy is a second buffer, filled from the pool's as the kind says (a scratch's is not),
+ * so a render that read its scratch before writing it, or wrote a constant table, would differ from the device. */
+struct opus_fast_lease { void *fast; };
+struct opus_fast_lease *opus_fast_lease(struct opl_self *s, unsigned bytes, int kind, void *slow)
+{
+    (void)s;
+    if (!bytes || !slow || ((unsigned long)slow & 3) || kind < OPUS_FAST_SCRATCH || kind > OPUS_FAST_STATE)
+        return 0;
+    struct opus_fast_lease *l = calloc(1, sizeof *l);
+    l->fast = malloc(bytes);
+    if (kind == OPUS_FAST_SCRATCH)
+        memset(l->fast, 0xA5, bytes);
+    else
+        memcpy(l->fast, slow, bytes);
+    return l;
+}
+void *opus_fast_use(struct opus_fast_lease *l) { return l ? l->fast : 0; }
 void opus_sincos(int t, int *s, int *c)
 {
     const double a = t * 2 * M_PI / 4096.0;

@@ -2,7 +2,7 @@
 
 ## What you need
 
-- An **original OP-1** running firmware 246, with **Opus 2** installed: public beta 3.2 (core 2.13) is current, and any core from 2.8 loads it. The engine uses `opus_page_still`, which was added in 2.8, and nothing newer.
+- An **original OP-1** running firmware 246, with **Opus 2 beta 4** installed (core 2.21 or later; beta 4 RC1 is core 2.30). The engine leases fast memory (`opus_fast_lease`) and names its shift layer for LFO types, both added in core 2.21. On beta 3.x the mods list refuses it: use 1.0.1 (commit `fb2e822`) there.
 - The plugin file, [`dist/bronzechoir.opmod`](../dist/bronzechoir.opmod).
 
 ## Install
@@ -21,7 +21,7 @@ Delete `bronzechoir.opmod` from the mods folder in disk mode. If the OP-1 ever f
 
 ## Build from source
 
-You need Python 3.8 or later and the Blackfin cross-compiler: `bfin-elf-gcc` 13.3.0 with binutils 2.38, the compiler Opus itself is built with. This repository does **not** contain or build the compiler. Use your existing shared Blackfin toolchain, built once with the Opus plugin kit's own recipe (`plugin-kit/tools/toolchain/build-bfin-toolchain.sh` in [LizardMan245/opus](https://github.com/LizardMan245/opus/tree/main/plugin-kit)). Point the kit at it:
+You need the Opus 2 beta 4 plugin kit (`opus2-plugin-kit` from the beta 4 release; it is not in this repository), Python 3.8 or later and the Blackfin cross-compiler: `bfin-elf-gcc` 13.3.0 with binutils 2.38, the compiler Opus itself is built with. This repository does **not** contain or build the compiler. Use your existing shared Blackfin toolchain, built once with the Opus plugin kit's own recipe (`plugin-kit/tools/toolchain/build-bfin-toolchain.sh` in [LizardMan245/opus](https://github.com/LizardMan245/opus/tree/main/plugin-kit)). Point the kit at it:
 
 ```
 export OP1_BFIN_TOOLCHAIN=/path/to/your/bfin-toolchain      # the folder that holds bin/bfin-elf-gcc
@@ -30,18 +30,19 @@ export PATH=$OP1_BFIN_TOOLCHAIN/bin:$PATH                  # for sim/run_bench.s
 
 If your shared toolchain has an `env.sh` that sets these, source that instead.
 
-The vendored kit leaves out `tools/re/`, `examples/` and `tools/toolchain/` ([VENDORED.txt](../third_party/opus-plugin-kit/VENDORED.txt)).
+`third_party/opus-plugin-kit` is the beta 3.2 kit (core 2.13). It builds 1.0.x only: 1.1.0 calls core 2.21 services its headers do not declare.
 
 Then build:
 
 ```
-python3 third_party/opus-plugin-kit/plugin_tool.py build engine/noladrift.bronzechoir --out dist/bronzechoir.opmod
-python3 third_party/opus-plugin-kit/plugin_tool.py show dist/bronzechoir.opmod
+export OPUS_KIT=/path/to/opus2-plugin-kit                    # the beta 4 kit
+python3 $OPUS_KIT/plugin_tool.py build engine/noladrift.bronzechoir --out dist/bronzechoir.opmod
+python3 $OPUS_KIT/plugin_tool.py show dist/bronzechoir.opmod
 ```
 
 The build treats every warning as an error and refuses anything the headers do not declare.
 
-**How the shipped file was built.** GNU's FTP mirrors could not be reached from the build machine, so the compiler that built `dist/bronzechoir.opmod` was built from Ubuntu's `gcc-13-source` (GCC 13.3.0) and `binutils-source` (2.42, rather than the kit's 2.38) packages. Their GNU signatures were **not** checked. If that matters to you, rebuild the plugin with a toolchain built by the kit's own verified recipe (GCC 13.3.0, binutils 2.38). The result should behave the same, though the bytes may differ.
+**How the shipped file was built.** 1.1.0's `dist/bronzechoir.opmod` was built with the shared reference toolchain (GCC 13.3.0, binutils 2.38, GNU sources with verified signatures, the kit's own recipe) and the beta 4 RC1 kit. The build is reproducible: SHA-256 `fde97327…c58b6` (22,372 bytes). 1.0.x's file was built with binutils 2.42 from Ubuntu's source packages.
 
 ## Regenerating the bells' tables
 
@@ -52,7 +53,7 @@ The four bells' modal structures are defined in `tools/make_tables.py`. Running 
 These run on Linux and need gcc, make, Python 3 with numpy and Pillow, and ffmpeg:
 
 ```
-make -C host                                   # builds host/bc_host (score player) and host/stress
+make -C host OPUS_KIT=$OPUS_KIT                # builds host/bc_host (score player) and host/stress
 host/stress                                     # the ten stress tests (docs/TESTING.md)
 python3 tools/analyze_presets.py                # the preset measurements (docs/PRESETS.md)
 sim/run_bench.sh                                # the CPU benchmark in the Blackfin simulator (needs bfin-elf-run)

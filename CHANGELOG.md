@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.1.0 (2026-11-06): native for Opus 2 beta 4
+
+Built with the Opus 2 beta 4 RC1 plugin kit (core 2.30) and the shared reference toolchain (GCC 13.3.0, binutils 2.38). Needs core 2.21; for beta 3.x keep 1.0.1. The sound, the controls, the pages and the presets are unchanged: on a computer the ten stress tests, the demo score's audio and every page frame are bit-identical to 1.0.1, and the Blackfin simulator's cycle counts are the same in all seven scenarios.
+
+- **Fast memory on lease.** The render's scratch and sine table (2,304 bytes) are no longer taken from L1 for good at the start (`opus_fast`); they are on two leases (`opus_fast_lease`, a scratch and a constant table), fast while the engine plays and handed back when it stops, so other plugins get that memory too. No `priority` line: the engine's voices stay where the core made them (it keeps pointers to them for the sympathy, so `OPUS_ENGINE_STATE_MOVES` is not set).
+- **The bells' swing keeps time.** Beta 4 calls a still page only every fourth frame, and a late frame comes two periods on, so a pendulum stepped once a frame would lag and slow down. The page now steps it once per display period of the CPU's cycle counter (`bc_cycles`, in `bc_fw.c`).
+- **The shift layer is named for LFO types** (`shift_knobs`: shift + green sympathy, shift + orange detune), so the matrix and other LFO types move the right knobs.
+- The sine table is in the plugin once (it was compiled into two files).
+- The shipped `.opmod` is now built with binutils 2.38 (1.0.x was built with 2.42), the reference toolchain.
+
 ## 1.0.1 (2026-11-05)
 
 - Fixed a control clash with Outatime. On a device the mods list said "shift blue turn is taken by the bronze choir", so whichever of the two engines loaded second was refused. The shift turns on T1 are now declared `modal`: they are taken only while this engine's own page shows, which is also the only time the engine's turn handler runs. Modal controls never clash, so both engines can be installed together. No sound, page or parameter changed.

@@ -86,9 +86,15 @@ void bc_sum_init(void);
 void bc_block(short *buf);
 
 /* Fast memory (L1) for what every render reads and writes: its scratch and the sine table, bc_fast_bytes() bytes
- * from opus_fast, or 0 (then both stay in SDRAM). */
+ * from opus_fast, or 0 (then both stay in SDRAM). The simulator's benchmarks use this. */
 int bc_fast_bytes(void);
 void bc_fast(void *mem);
+
+/* The same two, where they are this block (Opus beta 4's fast memory on lease, bronzechoir.c): the render's scratch,
+ * bc_scratch_bytes() bytes, and a copy of BC_SINE. Called before each render; 0 keeps what was set before. */
+int bc_scratch_bytes(void);
+void bc_sine_copy(short *t);               /* BC_SINE_LEN shorts: kept here, so BC_SINE is in the plugin once */
+void bc_mem(int *scratch, const short *sine_table);
 
 /* A mode's live amplitude for the T2 page: voice v's mode k, Q15. */
 int bc_mode_amp(const struct bc_voice *v, int k);
